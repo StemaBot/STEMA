@@ -1,0 +1,21 @@
+{
+  "name": "StemaBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "config.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "steam-api": "^1.1.3",
+    "underscore": "^1.8.3",
+    "steam": "^1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
