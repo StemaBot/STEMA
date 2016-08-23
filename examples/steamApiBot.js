@@ -8,12 +8,9 @@ info on node-steam-api library.
 */
 
 var steam = require('steam');
-var steamApi = require('steam-api')
 var Config = require('./config.js');
 var IO = require('./lib/IO.js');
-var _ = require('underscore');
-
-var userStats = new steamApi.UserStats(Config.apiKey);
+var Stats = require('./lib/Stats.js');
 var steamClient = new steam.SteamClient();
 var steamUser = new steam.SteamUser(steamClient);
 var steamFriends = new steam.SteamFriends(steamClient);
@@ -38,25 +35,19 @@ steamClient.on('logOnResponse', function() {
     
         // Check for the command and also make sure query[1] isn't null
         // to avoid errors
-        if(command == '!csgo' && query[1] != null){
-            userStats.GetUserStatsForGame('730', query[1]).done(function(result){
-                const stats =  result.stats;
-                
-                const kills = _.where(stats, { "name": "total_kills" })[0].value;
-                const deaths = _.where(stats, { "name": "total_deaths" })[0].value;
-                const matchesWon = _.where(stats, { "name": "total_matches_won" })[0].value;
-
-                steamFriends.sendMessage(source, query[1] + ' has ' + kills + ' total kills, ' + deaths + ' total deaths, and a total of ' + matchesWon + ' matches won in CS:GO.');
+        if(command == '!csgo' && query[1] != null) {
+            Stats.getThreatStats('730', query[1], function(result){
+                steamFriends.sendMessage(source, query[1] + ' has ' + result.kills + ' total kills, ' + ' in CS:GO.');
             });
-        }else if(command == '!tf2' && query[1] != null){
-            userStats.GetUserStatsForGame('440', query[1]).done(function(result){
-                const stats = result.stats;
-
-                const scoutDmg = _.where(stats, { "name": "Scout.accum.iDamageDealt" })[0].value;
-                const heavyDmg = _.where(stats, { "name": "Heavy.accum.iDamageDealt" })[0].value;
-                const medicDmg = _.where(stats, { "name": "Medic.accum.iDamageDealt" })[0].value;
-
-                steamFriends.sendMessage(source, query[1] + ' has ' + scoutDmg + ' total damage dealt as scout, ' + heavyDmg + ', as heavy, and ' + medicDmg + ' as Medic in TF2');
+        }
+        if(command == '!tf2' && query[1] != null) {
+            Stats.getThreatStats('440', query[1], function(result){
+                steamFriends.sendMessage(source, query[1] + ' has ' + result.scoutDmg + ' total damage dealt as scout in TF2');
+            });
+        }
+        if(command == '!getId' && query[1] != null) {
+            Stats.getId(query[1], function(result){
+                steamFriends.sendMessage(source, query[1] + ': ' + result);
             });
         }
     });
