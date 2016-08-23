@@ -6,8 +6,8 @@ Most functions should be run inside the logonresponse
 event.
 */
 
-var steam = require("steam");
-var Config = require("./config.js");
+var steam = require('steam');
+var Config = require('./config.js');
 var steamClient = new steam.SteamClient();
 var steamUser = new steam.SteamUser(steamClient);
 
