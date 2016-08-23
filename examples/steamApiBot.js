@@ -46,7 +46,7 @@ steamClient.on('logOnResponse', function() {
                 const deaths = _.where(stats, { "name": "total_deaths" })[0].value;
                 const matchesWon = _.where(stats, { "name": "total_matches_won" })[0].value;
 
-                steamFriends.sendMessage(source, query[1] + " has " + kills + " total kills, " + deaths + " total deaths, and a total of " + matchesWon + " matches won in CS:GO.");
+                steamFriends.sendMessage(source, query[1] + ' has ' + kills + ' total kills, ' + deaths + ' total deaths, and a total of ' + matchesWon + ' matches won in CS:GO.');
             });
         }else if(command == '!tf2' && query[1] != null){
             userStats.GetUserStatsForGame('440', query[1]).done(function(result){
@@ -56,7 +56,7 @@ steamClient.on('logOnResponse', function() {
                 const heavyDmg = _.where(stats, { "name": "Heavy.accum.iDamageDealt" })[0].value;
                 const medicDmg = _.where(stats, { "name": "Medic.accum.iDamageDealt" })[0].value;
 
-                steamFriends.sendMessage(source, query[1] + " has " + scoutDmg + " total damage dealt as scout, " + heavyDmg + ", as heavy, and " + medicDmg + " as Medic in TF2");
+                steamFriends.sendMessage(source, query[1] + ' has ' + scoutDmg + ' total damage dealt as scout, ' + heavyDmg + ', as heavy, and ' + medicDmg + ' as Medic in TF2');
             });
         }
     });
